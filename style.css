@@ -5,153 +5,577 @@
 }
 
 body {
-    min-height: 100vh;
-    font-family: Arial, sans-serif;
+    background: #030414;
     color: white;
-    background:
-        radial-gradient(circle at top, #32106b, #090018 55%, #020006);
+    font-family: Arial, sans-serif;
+    overflow-x: hidden;
 }
 
-header {
-    text-align: center;
-    padding: 25px 10px;
-    background: rgba(0, 0, 0, 0.45);
-    border-bottom: 2px solid #7c3cff;
-}
-
-header h1 {
-    font-size: 34px;
-    text-shadow: 0 0 15px #9d5cff;
-}
-
-header p {
-    margin-top: 8px;
-    color: #c8a9ff;
-}
-
-main {
-    width: 95%;
-    max-width: 1100px;
+.game {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    min-height: 100vh;
     margin: auto;
+    overflow: hidden;
+
+    background:
+        radial-gradient(circle at 50% 35%, #222a66 0%, transparent 35%),
+        radial-gradient(circle at 20% 80%, #32115c 0%, transparent 35%),
+        linear-gradient(#070b28, #030414 80%);
 }
 
-.arena {
-    min-height: 420px;
-    margin-top: 25px;
-    padding: 25px;
+
+/* =========================
+   TOPO
+========================= */
+
+.top-bar,
+.bottom-bar {
+    position: relative;
+    z-index: 20;
+
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
     align-items: center;
-    border: 2px solid #5222a8;
-    border-radius: 20px;
-    background: rgba(12, 5, 30, 0.85);
-    box-shadow: 0 0 30px rgba(111, 45, 255, 0.25);
+
+    padding: 10px;
+
+    background:
+        linear-gradient(90deg,
+        rgba(7, 13, 40, .98),
+        rgba(24, 10, 50, .92));
+
+    border-bottom: 1px solid #4c6cff;
 }
 
-.player {
-    text-align: center;
+.bottom-bar {
+    border-top: 1px solid #4c6cff;
+    border-bottom: none;
 }
 
-.player h2 {
-    margin-bottom: 10px;
+.avatar {
+    width: 55px;
+    height: 55px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    font-size: 10px;
+    font-weight: bold;
+
+    background:
+        radial-gradient(circle, #6d3cff, #101333);
+
+    border: 2px solid #7ca4ff;
+
+    box-shadow:
+        0 0 15px #315dff;
 }
 
-.enemy h2 {
-    color: #ff5555;
+.player-info {
+    margin-left: 10px;
+    flex: 1;
+}
+
+.player-info strong {
+    font-size: 14px;
+}
+
+.level {
+    font-size: 11px;
+    color: #aebcff;
+    margin-top: 3px;
 }
 
 .health {
-    padding: 10px 20px;
+    margin-top: 5px;
+
+    display: inline-block;
+
+    padding: 4px 15px;
+
     border-radius: 20px;
-    background: #270b36;
-    border: 1px solid #8e35ff;
+
+    font-weight: bold;
+
+    background: #141a45;
+
+    border: 1px solid #416cff;
 }
 
-.battle {
+.enemy-health {
+    color: #ff526b;
+}
+
+.player-health {
+    color: #55aaff;
+}
+
+.turn {
+    text-align: center;
+
+    padding: 8px 12px;
+
+    border-radius: 10px;
+
+    background: #10163b;
+
+    border: 1px solid #657cff;
+
+    font-size: 10px;
+}
+
+.turn strong {
+    font-size: 20px;
+}
+
+
+/* =========================
+   ARENA
+========================= */
+
+.arena {
+    position: relative;
+
+    height: 590px;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(circle at center,
+        rgba(74, 87, 190, .4),
+        transparent 40%),
+        linear-gradient(
+            180deg,
+            #11194a,
+            #080a27 50%,
+            #10062b
+        );
+
+    perspective: 900px;
+}
+
+.arena-background {
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        radial-gradient(circle,
+        rgba(120, 120, 255, .2) 1px,
+        transparent 2px);
+
+    background-size: 35px 35px;
+
+    opacity: .5;
+}
+
+
+/* =========================
+   DECK
+========================= */
+
+.deck {
+    position: absolute;
+
+    z-index: 15;
+
     text-align: center;
 }
+
+.card-back {
+    width: 52px;
+    height: 72px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 7px;
+
+    background:
+        radial-gradient(circle,
+        #6f25d9,
+        #120728 70%);
+
+    border: 2px solid #c08cff;
+
+    box-shadow:
+        0 0 15px #6e31ff;
+
+    font-size: 27px;
+}
+
+.deck span {
+    display: block;
+
+    margin-top: 3px;
+
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.enemy-deck {
+    top: 145px;
+    right: 10px;
+}
+
+.player-deck {
+    bottom: 140px;
+    left: 10px;
+}
+
+
+/* =========================
+   CAMPOS
+========================= */
+
+.card-zones {
+    position: absolute;
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: 90%;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    z-index: 3;
+}
+
+.enemy-zones {
+    top: 85px;
+}
+
+.player-zones {
+    bottom: 80px;
+}
+
+.zone {
+    width: 52px;
+    height: 72px;
+
+    border-radius: 5px;
+
+    border: 1px solid rgba(110, 157, 255, .4);
+
+    background:
+        rgba(35, 55, 110, .16);
+
+    box-shadow:
+        inset 0 0 15px rgba(50, 110, 255, .12);
+}
+
+
+/* =========================
+   PERSONAGENS
+========================= */
+
+.battle-character {
+    position: absolute;
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    z-index: 8;
+
+    text-align: center;
+}
+
+.enemy-character {
+    top: 115px;
+}
+
+.player-character {
+    bottom: 105px;
+}
+
+.character-art {
+    width: 150px;
+    height: 150px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    font-size: 70px;
+
+    background:
+        radial-gradient(circle,
+        #652cff,
+        #0c0928 65%);
+
+    border: 2px solid #849cff;
+
+    box-shadow:
+        0 0 20px #554cff,
+        0 0 60px rgba(87, 55, 255, .5);
+}
+
+.player-character .character-art {
+    background:
+        radial-gradient(circle,
+        #ff6b20,
+        #35100b 65%);
+
+    border-color: #ff9b57;
+
+    box-shadow:
+        0 0 25px #ff531f,
+        0 0 70px rgba(255, 70, 20, .45);
+}
+
+.stats {
+    margin-top: -8px;
+
+    position: relative;
+
+    display: flex;
+
+    justify-content: center;
+    gap: 5px;
+}
+
+.stats span {
+    padding: 5px 8px;
+
+    background: #090d25;
+
+    border: 1px solid #738cff;
+
+    border-radius: 5px;
+
+    font-size: 11px;
+}
+
+.stats b {
+    color: #ffffff;
+}
+
+.character-name {
+    margin-top: 5px;
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+    letter-spacing: 2px;
+
+    text-shadow:
+        0 0 8px #8ca5ff;
+}
+
+
+/* =========================
+   MÃO DE CARTAS
+========================= */
+
+.hand {
+    position: relative;
+
+    z-index: 25;
+
+    height: 115px;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: flex-end;
+
+    gap: 4px;
+
+    padding: 5px;
+
+    background:
+        linear-gradient(
+            rgba(5, 6, 25, .2),
+            rgba(5, 6, 25, .98)
+        );
+}
+
+.hand-card {
+    width: 65px;
+    height: 95px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 7px;
+
+    font-size: 28px;
+
+    font-weight: bold;
+
+    transform: rotate(-2deg);
+
+    border: 2px solid #8f8fff;
+
+    background:
+        linear-gradient(
+            145deg,
+            #151947,
+            #08091b
+        );
+
+    box-shadow:
+        0 0 10px rgba(80, 100, 255, .4);
+
+    transition: .2s;
+}
+
+.hand-card:nth-child(2) {
+    transform: translateY(-7px) rotate(0deg);
+}
+
+.hand-card:nth-child(3) {
+    transform: translateY(-10px) rotate(1deg);
+}
+
+.hand-card:nth-child(4) {
+    transform: translateY(-7px) rotate(2deg);
+}
+
+.hand-card:hover {
+    transform: translateY(-20px) scale(1.08);
+
+    box-shadow:
+        0 0 25px #6f7cff;
+}
+
+.hand-card strong {
+    margin-top: 7px;
+
+    font-size: 8px;
+
+    letter-spacing: 1px;
+}
+
+.fire {
+    border-color: #ff672f;
+    box-shadow: 0 0 12px #ff3d18;
+}
+
+.thunder {
+    border-color: #ffe34d;
+}
+
+.shadow {
+    border-color: #9b5cff;
+}
+
+.water {
+    border-color: #42bfff;
+}
+
+.light {
+    border-color: #fff5a0;
+}
+
+
+/* =========================
+   BOTÕES
+========================= */
+
+.controls {
+    position: relative;
+
+    z-index: 30;
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 5px;
+
+    padding: 8px;
+
+    background: #050719;
+}
+
+.controls button {
+    padding: 10px 12px;
+
+    border-radius: 8px;
+
+    color: white;
+
+    font-size: 10px;
+    font-weight: bold;
+
+    border: 1px solid #687cff;
+
+    background:
+        linear-gradient(
+            135deg,
+            #2630a8,
+            #651ab8
+        );
+
+    cursor: pointer;
+
+    box-shadow:
+        0 0 10px rgba(85, 80, 255, .4);
+}
+
+.controls button:active {
+    transform: scale(.94);
+}
+
+
+/* =========================
+   MENSAGEM
+========================= */
 
 #message {
-    margin-bottom: 20px;
-    color: #e6d4ff;
-    font-size: 18px;
-}
+    position: relative;
 
-button {
-    border: none;
-    padding: 12px 18px;
-    margin: 5px;
-    border-radius: 10px;
-    color: white;
-    background: linear-gradient(135deg, #6b21ff, #a855f7);
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.2s;
-}
+    z-index: 30;
 
-button:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 15px #a855f7;
-}
+    padding: 10px;
 
-.cards {
-    margin: 25px 0;
-    padding: 20px;
-}
-
-.cards h2 {
     text-align: center;
-    margin-bottom: 20px;
+
+    font-size: 13px;
+
+    color: #d9ddff;
+
+    background: #030513;
+
+    border-top: 1px solid #263cff;
 }
 
-#cardContainer {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    flex-wrap: wrap;
-}
 
-.card {
-    width: 220px;
-    min-height: 300px;
-    padding: 18px;
-    border-radius: 16px;
-    text-align: center;
-    background:
-        linear-gradient(160deg, #271052, #0d061b);
-    border: 2px solid #8b5cf6;
-    box-shadow: 0 0 20px rgba(139, 92, 246, 0.35);
-    transition: 0.25s;
-}
+/* =========================
+   CELULAR
+========================= */
 
-.card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 0 30px rgba(168, 85, 247, 0.7);
-}
+@media (max-width: 380px) {
 
-.card h3 {
-    font-size: 23px;
-    margin-bottom: 12px;
-}
+    .hand-card {
+        width: 57px;
+        height: 86px;
+    }
 
-.card p {
-    margin: 10px 0;
-    color: #d8c7ff;
-}
-
-@media (max-width: 600px) {
-
-    header h1 {
-        font-size: 25px;
+    .character-art {
+        width: 125px;
+        height: 125px;
     }
 
     .arena {
-        min-height: 380px;
-    }
-
-    .card {
-        width: 90%;
-        max-width: 280px;
+        height: 540px;
     }
 }
