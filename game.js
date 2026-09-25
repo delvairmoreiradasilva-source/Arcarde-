@@ -1,51 +1,67 @@
-// ==============================
-// ECLIPSE LEGENDS
-// Sistema básico de batalha
-// ==============================
+// ==========================================
+// ECLIPSE LEGENDS - SISTEMA DE BATALHA
+// ==========================================
 
-let playerHealth = 30;
-let enemyHealth = 30;
+let playerHealth = 4000;
+let enemyHealth = 4000;
 
 let playerEnergy = 10;
 let enemyEnergy = 10;
 
+let turn = 1;
 let playerTurn = true;
 
-// ==============================
-// CARTAS
-// ==============================
-
 const cards = {
-
     Kairo: {
         name: "Kairo",
-        power: 94,
-        defense: 72,
-        energy: 3,
-        ability: "Explosão Solar"
+        element: "🔥",
+        atk: 2800,
+        def: 1800,
+        cost: 3,
+        skill: "Explosão Solar"
     },
 
     Raizen: {
         name: "Raizen",
-        power: 91,
-        defense: 65,
-        energy: 4,
-        ability: "Mil Raios"
+        element: "⚡",
+        atk: 2600,
+        def: 1500,
+        cost: 4,
+        skill: "Mil Raios"
     },
 
     Noctis: {
         name: "Noctis",
-        power: 88,
-        defense: 83,
-        energy: 4,
-        ability: "Abismo Eterno"
-    }
+        element: "🌑",
+        atk: 2500,
+        def: 1800,
+        cost: 4,
+        skill: "Abismo Eterno"
+    },
 
+    Ayla: {
+        name: "Ayla",
+        element: "🌊",
+        atk: 1900,
+        def: 2400,
+        cost: 2,
+        skill: "Cura das Marés"
+    },
+
+    Seraph: {
+        name: "Seraph",
+        element: "🌟",
+        atk: 3000,
+        def: 2600,
+        cost: 5,
+        skill: "Aurora Divina"
+    }
 };
 
-// ==============================
-// ELEMENTOS DA TELA
-// ==============================
+
+// ==========================================
+// ELEMENTOS DA INTERFACE
+// ==========================================
 
 const playerHealthText =
     document.getElementById("playerHealth");
@@ -53,145 +69,60 @@ const playerHealthText =
 const enemyHealthText =
     document.getElementById("enemyHealth");
 
+const turnNumber =
+    document.getElementById("turnNumber");
+
 const message =
     document.getElementById("message");
 
 
-// ==============================
-// ATUALIZAR TELA
-// ==============================
+// ==========================================
+// ATUALIZAR INTERFACE
+// ==========================================
 
 function updateScreen() {
 
-    playerHealthText.textContent = playerHealth;
-    enemyHealthText.textContent = enemyHealth;
+    playerHealthText.textContent =
+        Math.max(0, playerHealth);
+
+    enemyHealthText.textContent =
+        Math.max(0, enemyHealth);
+
+    turnNumber.textContent = turn;
 
 }
 
 
-// ==============================
-// ATAQUE NORMAL
-// ==============================
+// ==========================================
+// MENSAGEM
+// ==========================================
+
+function showMessage(text) {
+    message.textContent = text;
+}
+
+
+// ==========================================
+// ATAQUE
+// ==========================================
 
 function attack() {
 
     if (!playerTurn) {
 
-        message.textContent =
-            "⏳ Espere sua vez!";
+        showMessage("⏳ Aguarde sua vez!");
 
         return;
-
     }
-
-    const damage = Math.floor(Math.random() * 6) + 3;
-
-    enemyHealth -= damage;
-
-    if (enemyHealth < 0) {
-        enemyHealth = 0;
-    }
-
-    message.textContent =
-        `⚔️ Você causou ${damage} de dano!`;
-
-    updateScreen();
-
-    checkWinner();
-
-    if (enemyHealth > 0) {
-
-        playerTurn = false;
-
-        setTimeout(enemyAttack, 1000);
-
-    }
-
-}
-
-
-// ==============================
-// ATAQUE DO INIMIGO
-// ==============================
-
-function enemyAttack() {
-
-    const damage = Math.floor(Math.random() * 5) + 2;
-
-    playerHealth -= damage;
-
-    if (playerHealth < 0) {
-        playerHealth = 0;
-    }
-
-    message.textContent =
-        `👹 O inimigo causou ${damage} de dano!`;
-
-    updateScreen();
-
-    checkWinner();
-
-    if (playerHealth > 0) {
-
-        playerTurn = true;
-
-        message.textContent =
-            "🔥 Sua vez!";
-
-    }
-
-}
-
-
-// ==============================
-// USAR CARTA
-// ==============================
-
-function useCard(cardName) {
-
-    if (!playerTurn) {
-
-        message.textContent =
-            "⏳ Espere sua vez!";
-
-        return;
-
-    }
-
-    const card = cards[cardName];
-
-    if (!card) {
-
-        message.textContent =
-            "Carta não encontrada!";
-
-        return;
-
-    }
-
-    if (playerEnergy < card.energy) {
-
-        message.textContent =
-            "⚡ Energia insuficiente!";
-
-        return;
-
-    }
-
-    playerEnergy -= card.energy;
 
     const damage =
-        Math.floor(card.power / 10) +
-        Math.floor(Math.random() * 6);
+        Math.floor(Math.random() * 301) + 500;
 
     enemyHealth -= damage;
 
-    if (enemyHealth < 0) {
-        enemyHealth = 0;
-    }
-
-    message.textContent =
-        `🔥 ${card.name} usou ${card.ability} e causou ${damage} de dano!`;
+    showMessage(
+        `⚔️ Kairo atacou! ${damage} de dano!`
+    );
 
     updateScreen();
 
@@ -202,103 +133,323 @@ function useCard(cardName) {
         playerTurn = false;
 
         setTimeout(enemyAttack, 1200);
-
     }
-
 }
 
 
-// ==============================
+// ==========================================
+// ATAQUE DO OPONENTE
+// ==========================================
+
+function enemyAttack() {
+
+    const damage =
+        Math.floor(Math.random() * 251) + 400;
+
+    playerHealth -= damage;
+
+    showMessage(
+        `💥 Oponente atacou! ${damage} de dano!`
+    );
+
+    updateScreen();
+
+    checkWinner();
+
+    if (playerHealth > 0) {
+
+        playerTurn = true;
+
+        showMessage(
+            "🔥 Sua vez!"
+        );
+    }
+}
+
+
+// ==========================================
 // COMPRAR CARTA
-// ==============================
+// ==========================================
 
 function drawCard() {
 
-    const cardContainer =
-        document.getElementById("cardContainer");
+    if (!playerTurn) {
 
-    const availableCards =
+        showMessage(
+            "⏳ Você precisa esperar sua vez."
+        );
+
+        return;
+    }
+
+    const names =
         Object.keys(cards);
 
-    const randomCard =
-        availableCards[
+    const randomName =
+        names[
             Math.floor(
-                Math.random() * availableCards.length
+                Math.random() * names.length
             )
         ];
 
     const card =
-        cards[randomCard];
+        cards[randomName];
+
+    const hand =
+        document.querySelector(".hand");
 
     const newCard =
         document.createElement("div");
 
-    newCard.className = "card";
+    newCard.className =
+        "hand-card";
 
     newCard.innerHTML = `
-
-        <h3>✨ ${card.name}</h3>
-
-        <p>Raridade: Lendária</p>
-
-        <p>⚔️ Poder: ${card.power}</p>
-
-        <p>🛡️ Defesa: ${card.defense}</p>
-
-        <p>⚡ Energia: ${card.energy}</p>
-
-        <p>✨ ${card.ability}</p>
-
-        <button onclick="useCard('${card.name}')">
-            Usar
-        </button>
-
+        <span>${card.element}</span>
+        <strong>${card.name}</strong>
     `;
 
-    cardContainer.appendChild(newCard);
+    newCard.onclick = function () {
+        useCard(card.name);
+    };
 
-    message.textContent =
-        `🃏 Você comprou ${card.name}!`;
+    hand.appendChild(newCard);
 
+    showMessage(
+        `🃏 Você comprou ${card.name}!`
+    );
 }
 
 
-// ==============================
+// ==========================================
+// USAR CARTA
+// ==========================================
+
+function useCard(cardName) {
+
+    if (!playerTurn) {
+
+        showMessage(
+            "⏳ Aguarde sua vez!"
+        );
+
+        return;
+    }
+
+    const card =
+        cards[cardName];
+
+    if (!card) return;
+
+
+    if (playerEnergy < card.cost) {
+
+        showMessage(
+            `⚡ Você precisa de ${card.cost} de energia!`
+        );
+
+        return;
+    }
+
+
+    playerEnergy -= card.cost;
+
+
+    let damage =
+        Math.floor(card.atk * 0.35);
+
+
+    // Habilidades especiais
+
+    if (cardName === "Kairo") {
+
+        damage += 300;
+
+        showMessage(
+            `🔥 EXPLOSÃO SOLAR! ${damage} de dano!`
+        );
+
+    }
+
+    else if (cardName === "Raizen") {
+
+        damage += 250;
+
+        showMessage(
+            `⚡ MIL RAIOS! ${damage} de dano!`
+        );
+
+    }
+
+    else if (cardName === "Noctis") {
+
+        damage += 200;
+
+        enemyEnergy =
+            Math.max(0, enemyEnergy - 2);
+
+        showMessage(
+            `🌑 ABISMO ETERNO! ${damage} de dano!`
+        );
+
+    }
+
+    else if (cardName === "Ayla") {
+
+        const heal = 400;
+
+        playerHealth =
+            Math.min(
+                4000,
+                playerHealth + heal
+            );
+
+        showMessage(
+            `🌊 AYLA recuperou ${heal} de vida!`
+        );
+
+    }
+
+    else if (cardName === "Seraph") {
+
+        damage += 500;
+
+        showMessage(
+            `🌟 AURORA DIVINA! ${damage} de dano!`
+        );
+    }
+
+
+    enemyHealth -= damage;
+
+    updateScreen();
+
+    checkWinner();
+
+
+    if (enemyHealth > 0) {
+
+        playerTurn = false;
+
+        setTimeout(enemyAttack, 1200);
+    }
+}
+
+
+// ==========================================
+// PASSAR TURNO
+// ==========================================
+
+function endTurn() {
+
+    if (!playerTurn) {
+
+        showMessage(
+            "⏳ Não é seu turno."
+        );
+
+        return;
+    }
+
+    playerTurn = false;
+
+    showMessage(
+        "⏩ Você passou o turno."
+    );
+
+    setTimeout(enemyTurn, 900);
+}
+
+
+// ==========================================
+// TURNO DO INIMIGO
+// ==========================================
+
+function enemyTurn() {
+
+    enemyEnergy =
+        Math.min(10, enemyEnergy + 2);
+
+    showMessage(
+        "👹 Oponente está jogando..."
+    );
+
+    setTimeout(() => {
+
+        enemyAttack();
+
+    }, 900);
+}
+
+
+// ==========================================
+// PRÓXIMO TURNO
+// ==========================================
+
+function nextTurn() {
+
+    turn++;
+
+    playerEnergy =
+        Math.min(10, playerEnergy + 2);
+
+    playerTurn = true;
+
+    updateScreen();
+
+    showMessage(
+        `🔥 TURNO ${turn}! Sua vez!`
+    );
+}
+
+
+// ==========================================
 // VERIFICAR VENCEDOR
-// ==============================
+// ==========================================
 
 function checkWinner() {
 
     if (enemyHealth <= 0) {
 
-        message.textContent =
-            "🏆 VOCÊ VENCEU!";
+        enemyHealth = 0;
+
+        updateScreen();
+
+        showMessage(
+            "🏆 VITÓRIA! Você derrotou o oponente!"
+        );
 
         playerTurn = false;
 
-        return;
-
+        return true;
     }
+
 
     if (playerHealth <= 0) {
 
-        message.textContent =
-            "💀 VOCÊ PERDEU!";
+        playerHealth = 0;
+
+        updateScreen();
+
+        showMessage(
+            "💀 DERROTA! Sua vida chegou a zero."
+        );
 
         playerTurn = false;
 
-        return;
-
+        return true;
     }
 
+    return false;
 }
 
 
-// ==============================
-// INICIAR JOGO
-// ==============================
+// ==========================================
+// INICIAR
+// ==========================================
 
 updateScreen();
 
-message.textContent =
-    "🔥 A batalha começou! Sua vez!";
+showMessage(
+    "🔥 A batalha começou! Sua vez!"
+);
