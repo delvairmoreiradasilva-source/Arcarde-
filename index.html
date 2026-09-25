@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Eclipse Legends</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <h1>🌌 ECLIPSE LEGENDS</h1>
+        <p>Card Battle</p>
+    </header>
+
+    <main>
+
+        <section class="arena">
+
+            <div class="player enemy">
+                <h2>⚔️ Oponente</h2>
+                <div class="health">
+                    ❤️ Vida: <span id="enemyHealth">30</span>
+                </div>
+            </div>
+
+            <div class="battle">
+                <p id="message">Sua vez!</p>
+
+                <button onclick="attack()">
+                    ⚔️ ATACAR
+                </button>
+
+                <button onclick="drawCard()">
+                    🃏 COMPRAR CARTA
+                </button>
+            </div>
+
+            <div class="player">
+                <h2>🔥 Você</h2>
+                <div class="health">
+                    ❤️ Vida: <span id="playerHealth">30</span>
+                </div>
+            </div>
+
+        </section>
+
+        <section class="cards">
+
+            <h2>🃏 Suas Cartas</h2>
+
+            <div id="cardContainer">
+
+                <div class="card">
+                    <h3>🔥 Kairo</h3>
+                    <p>Lendário</p>
+                    <p>⚔️ Poder: 94</p>
+                    <p>🛡️ Defesa: 72</p>
+                    <button onclick="useCard('Kairo')">
+                        Usar
+                    </button>
+                </div>
+
+                <div class="card">
+                    <h3>⚡ Raizen</h3>
+                    <p>Mítico</p>
+                    <p>⚔️ Poder: 91</p>
+                    <p>🛡️ Defesa: 65</p>
+                    <button onclick="useCard('Raizen')">
+                        Usar
+                    </button>
+                </div>
+
+                <div class="card">
+                    <h3>🌑 Noctis</h3>
+                    <p>Mítico</p>
+                    <p>⚔️ Poder: 88</p>
+                    <p>🛡️ Defesa: 83</p>
+                    <button onclick="useCard('Noctis')">
+                        Usar
+                    </button>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <script src="game.js"></script>
+
+</body>
+</html>
