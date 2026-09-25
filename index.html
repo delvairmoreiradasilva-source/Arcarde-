@@ -2,7 +2,8 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>Eclipse Legends</title>
 
@@ -11,86 +12,144 @@
 
 <body>
 
-    <header>
-        <h1>🌌 ECLIPSE LEGENDS</h1>
-        <p>Card Battle</p>
-    </header>
+<div class="game">
 
-    <main>
+    <!-- OPONENTE -->
+    <div class="top-bar">
 
-        <section class="arena">
+        <div class="avatar enemy-avatar">
+            NOCTIS
+        </div>
 
-            <div class="player enemy">
-                <h2>⚔️ Oponente</h2>
-                <div class="health">
-                    ❤️ Vida: <span id="enemyHealth">30</span>
-                </div>
+        <div class="player-info">
+
+            <strong>OPONENTE</strong>
+
+            <div class="level">
+                LV. 12
             </div>
 
-            <div class="battle">
-                <p id="message">Sua vez!</p>
-
-                <button onclick="attack()">
-                    ⚔️ ATACAR
-                </button>
-
-                <button onclick="drawCard()">
-                    🃏 COMPRAR CARTA
-                </button>
+            <div class="health enemy-health">
+                ❤️ <span id="enemyHealth">4000</span>
             </div>
 
-            <div class="player">
-                <h2>🔥 Você</h2>
-                <div class="health">
-                    ❤️ Vida: <span id="playerHealth">30</span>
-                </div>
+        </div>
+
+        <div class="turn">
+            TURNO<br>
+            <strong id="turnNumber">1</strong>
+        </div>
+
+    </div>
+
+
+    <!-- DECK INIMIGO -->
+    <div class="deck enemy-deck">
+        <div class="card-back">
+            🃏
+        </div>
+
+        <span>32</span>
+    </div>
+
+
+    <!-- ARENA -->
+    <main class="arena">
+
+        <div class="arena-background"></div>
+
+        <!-- PERSONAGEM INIMIGO -->
+
+        <div class="battle-character enemy-character">
+
+            <div class="character-art">
+                🌑
             </div>
 
-        </section>
+            <div class="stats">
+                <span>⚔️ ATK <b>2500</b></span>
+                <span>🛡️ DEF <b>1800</b></span>
+            </div>
 
-        <section class="cards">
+            <div class="character-name">
+                NOCTIS
+            </div>
 
-            <h2>🃏 Suas Cartas</h2>
+        </div>
 
-            <div id="cardContainer">
 
-                <div class="card">
-                    <h3>🔥 Kairo</h3>
-                    <p>Lendário</p>
-                    <p>⚔️ Poder: 94</p>
-                    <p>🛡️ Defesa: 72</p>
-                    <button onclick="useCard('Kairo')">
-                        Usar
-                    </button>
-                </div>
+        <!-- CAMPOS -->
 
-                <div class="card">
-                    <h3>⚡ Raizen</h3>
-                    <p>Mítico</p>
-                    <p>⚔️ Poder: 91</p>
-                    <p>🛡️ Defesa: 65</p>
-                    <button onclick="useCard('Raizen')">
-                        Usar
-                    </button>
-                </div>
+        <div class="card-zones enemy-zones">
 
-                <div class="card">
-                    <h3>🌑 Noctis</h3>
-                    <p>Mítico</p>
-                    <p>⚔️ Poder: 88</p>
-                    <p>🛡️ Defesa: 83</p>
-                    <button onclick="useCard('Noctis')">
-                        Usar
-                    </button>
-                </div>
+            <div class="zone"></div>
+            <div class="zone"></div>
+            <div class="zone"></div>
+            <div class="zone"></div>
+            <div class="zone"></div>
+
+        </div>
+
+
+        <div class="card-zones player-zones">
+
+            <div class="zone"></div>
+            <div class="zone"></div>
+            <div class="zone"></div>
+            <div class="zone"></div>
+            <div class="zone"></div>
+
+        </div>
+
+
+        <!-- PERSONAGEM DO JOGADOR -->
+
+        <div class="battle-character player-character">
+
+            <div class="character-art">
+                🔥
+            </div>
+
+            <div class="stats">
+
+                <span>
+                    ⚔️ ATK <b>2800</b>
+                </span>
+
+                <span>
+                    🛡️ DEF <b>1800</b>
+                </span>
 
             </div>
 
-        </section>
+            <div class="character-name">
+                KAIRO
+            </div>
+
+        </div>
 
     </main>
 
-    <script src="game.js"></script>
 
-</body>
-</html>
+    <!-- DECK DO JOGADOR -->
+
+    <div class="deck player-deck">
+
+        <div class="card-back">
+            🃏
+        </div>
+
+        <span>28</span>
+
+    </div>
+
+
+    <!-- JOGADOR -->
+
+    <div class="bottom-bar">
+
+        <div class="avatar player-avatar">
+            KAIRO
+        </div>
+
+        <
